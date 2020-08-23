@@ -1,0 +1,23 @@
+version: '2'
+
+services:
+  br2:
+    container_name: br2-container
+    image: br2-image
+    build:
+      context: ./br2
+      dockerfile: Dockerfile
+    volumes:
+      - ./br2/build:/br2-build
+      - ~/Buildroot/local-dl:/br2-dl
+      - ~/Buildroot/local-ccache:/br2-ccache
+      - ~/.ssh:/br2-ssh/.ssh:ro
+    privileged: true
+    tty: true
+    user: 10000:10000
+    environment:
+      TZ: Asia/Tokyo
+
+volumes:
+  ccache:
+    external: true
