@@ -1,14 +1,20 @@
-step 1) Prepare docker volumes and directories
+Step.0) Prepare docker volumes (Do ONLY ONCE at a system)
 
-$ chmod a+w br2/build
 $ docker volume create --name=br2-ccache
 $ docker volume create --name=br2-dl
 
-step 2) Build docker-compose
+
+Step.1) Prepare outputs' directory
+
+$ chmod a+w br2-output
+
+
+Step 2) Build docker-compose
 
 $ docker-compose build
 
-step 3-a) Build manually in docker container
+
+Step.3-a) Build manually in docker container
 
 $ docker-compose up -d
 $ docker-compose exec br2 bash
@@ -16,11 +22,12 @@ $ docker-compose exec br2 bash
 % ./setup.sh
 % ./build.sh
 % exit
-(output is "br2/build/sdcard.img")
+(output is "br2-output/sdcard.img")
 
-step 3-b) Build automatically
+
+Step.3-b) Build automatically
 
 (uncomment #entrypoint -> entrypoint of docker-compose.yml)
 $ docker-compose build
 $ docker-compose run br2
-(output is "br2/build/sdcard.img")
+(output is "br2-output/sdcard.img")

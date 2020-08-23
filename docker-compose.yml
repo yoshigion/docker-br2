@@ -8,7 +8,7 @@ services:
       context: ./br2
       dockerfile: Dockerfile
     volumes:
-      - ./br2/build:/br2-build
+      - ./br2-output:/br2-output
       - br2-dl:/br2-dl
       - br2-ccache:/br2-ccache
       - ~/.ssh:/br2-ssh/.ssh:ro

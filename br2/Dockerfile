@@ -67,7 +67,7 @@ RUN set -x \
 # Setup build user environment
 ENV BUILD_DIR_BR2=${WORKING_DIR_BR2}
 ENV LOG_DIR_BR2=${WORKING_DIR_BR2}/log
-ENV IMAGE_DIR_BR2=/br2-build
+ENV IMAGE_DIR_BR2=/br2-output
 RUN set -x \
 && echo "${BUILD_DIR_BR2}"
 
