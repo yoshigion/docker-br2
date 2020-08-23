@@ -4,8 +4,7 @@ set -e
 set -x
 
 # build
-echo "***** build start *****"
-cd ${BUILD_DIR}/buildroot
+cd ${BUILD_DIR_BR2}/buildroot
 make raspberrypi3_64_defconfig
 make
-echo "***** build end *****"
+cp -p ${BUILD_DIR_BR2}/buildroot/output/images/sdcard.img ${IMAGE_DIR_BR2}

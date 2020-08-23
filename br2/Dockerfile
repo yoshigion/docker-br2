@@ -50,7 +50,7 @@ RUN apt-get install -y device-tree-compiler libssl-dev gettext bison flex unifde
 # Add utilitie packages
 RUN apt-get install -y sudo vim
 
-# Install Buildroot.
+# Install Buildroot
 ENV RELEASE_BR2 "2020.02"
 ENV WORKING_DIR_BR2=/working-br2
 RUN set -x \
@@ -65,19 +65,28 @@ RUN set -x \
 && rm buildroot-${RELEASE_BR2}.tar.gz
 
 # Setup build user environment
-ENV BUILD_DIR=${WORKING_DIR_BR2}
+ENV BUILD_DIR_BR2=${WORKING_DIR_BR2}
+ENV LOG_DIR_BR2=${WORKING_DIR_BR2}/log
+ENV IMAGE_DIR_BR2=/br2-build
 RUN set -x \
-&& echo "${BUILD_DIR}"
+&& echo "${BUILD_DIR_BR2}"
 
-ENV LOG_DIR=${WORKING_DIR_BR2}/log
+RUN set -x \
+&& mkdir -p ${BUILD_DIR_BR2} ${LOG_DIR_BR2} ${IMAGE_DIR_BR2} \
+&& chmod 777 ${BUILD_DIR_BR2} ${LOG_DIR_BR2} ${IMAGE_DIR_BR2}
+
 ENV DOCKER_UID=10000
 ENV DOCKER_GID=10000
 ENV DOCKER_UNAME=docker
 ENV DOCKER_GROUP=docker
 ENV DOCKER_PASSWORD=docker
 RUN set -x \
-&& mkdir -p ${BUILD_DIR} ${LOG_DIR} \
-&& chmod 777 ${BUILD_DIR} ${LOG_DIR}
+&& echo "%"${DOCKER_GROUP}" ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/${DOCKER_GROUP}
+
+RUN set -x \
+&& useradd -m --uid ${DOCKER_UID} ${DOCKER_UNAME} \
+&& echo ${DOCKER_UNAME}:${DOCKER_PASSWORD} | chpasswd
+
 WORKDIR ${WORKING_DIR_BR2}
 
 COPY ./setup.sh ${WORKING_DIR_BR2}/setup.sh
@@ -89,12 +98,5 @@ RUN set -x \
 COPY ./config.patch ${WORKING_DIR_BR2}/config.patch
 RUN set -x \
 && chmod a+r ${WORKING_DIR_BR2}/config.patch
-
-RUN set -x \
-&& echo "%"${DOCKER_GROUP}" ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/${DOCKER_GROUP}
-
-RUN set -x \
-&& useradd -m --uid ${DOCKER_UID} ${DOCKER_UNAME} \
-&& echo ${DOCKER_UNAME}:${DOCKER_PASSWORD} | chpasswd
 
 USER ${DOCKER_UNAME}
