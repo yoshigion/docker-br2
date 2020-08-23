@@ -1,5 +1,6 @@
-* Prepare docker volumes
+* Prepare docker volumes and directories
 
+$ chmod a+w br2/build
 $ docker volume create --name=buildroot-dl
 $ docker volume create --name=buildroot-dl
 
