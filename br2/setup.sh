@@ -16,5 +16,5 @@ git config --global user.email "docker@docker"
 git config --global user.name "docker"
 git config --global color.ui false
 
-# apply patch of board defconfig
-(cd ${BUILD_DIR_BR2}/buildroot && patch -p0 < ../config.patch)
+# copy the board defconfig file
+cp ./${DEFCONFIG_BR2} ${BUILD_DIR_BR2}/buildroot/configs/

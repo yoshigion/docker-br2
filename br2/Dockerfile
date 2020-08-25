@@ -88,6 +88,7 @@ RUN set -x \
 && echo ${DOCKER_UNAME}:${DOCKER_PASSWORD} | chpasswd
 
 WORKDIR ${WORKING_DIR_BR2}
+ENV DEFCONFIG_BR2=raspberrypi3_64_glibc_defconfig
 
 COPY ./setup.sh ${WORKING_DIR_BR2}/setup.sh
 COPY ./build.sh ${WORKING_DIR_BR2}/build.sh
@@ -95,8 +96,8 @@ COPY ./entry.sh ${WORKING_DIR_BR2}/entry.sh
 RUN set -x \
 && chmod 777 ${WORKING_DIR_BR2}/setup.sh ${WORKING_DIR_BR2}/build.sh ${WORKING_DIR_BR2}/entry.sh
 
-COPY ./config.patch ${WORKING_DIR_BR2}/config.patch
+COPY ./${DEFCONFIG_BR2} ${WORKING_DIR_BR2}/
 RUN set -x \
-&& chmod a+r ${WORKING_DIR_BR2}/config.patch
+&& chmod a+r ${WORKING_DIR_BR2}/${DEFCONFIG_BR2}
 
 USER ${DOCKER_UNAME}
