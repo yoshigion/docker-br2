@@ -17,7 +17,7 @@ services:
     user: 10000:10000
     environment:
       TZ: Asia/Tokyo
-    #entrypoint: /working-br2/entry.sh
+    entrypoint: /working-br2/entry.sh
 
 volumes:
   br2-ccache:
