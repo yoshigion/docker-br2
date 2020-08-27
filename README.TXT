@@ -1,3 +1,5 @@
+* Build procedure
+
 Step.0) Prepare docker volumes (Do ONLY ONCE at a system)
 
 $ docker volume create --name=br2-ccache
@@ -31,3 +33,10 @@ $ docker-compose exec br2 bash
 % ./build.sh
 % exit
 (output is "br2-output/sdcard.img")
+
+
+
+* How to change defconfig file
+
+** Place new defconfig file to br2/
+** Change filename varialble "DEFCONFIG_BR2" of docker-compose.yml
