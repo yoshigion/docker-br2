@@ -16,7 +16,8 @@ services:
     tty: true
     user: 10000:10000
     environment:
-      TZ: Asia/Tokyo
+      - TZ=Asia/Tokyo
+      - DEFCONFIG_BR2=raspberrypi3_64_glibc_defconfig
     entrypoint: /working-br2/entry.sh
 
 volumes:
